@@ -21,13 +21,13 @@ class App extends Component {
     //       items: json
     //     })
     //   });
-    fetchJsonp('https://api.behance.net/v2/users/yente_ho/projects?client_id=XrTXvo7P59I8TcXEqP0DDRgxi6Jmx5Rd&callback=myCallback')
+    fetchJsonp('https://api.behance.net/v2/projects/68127253?client_id=XrTXvo7P59I8TcXEqP0DDRgxi6Jmx5Rd')
       .then(res => res.json())
       .then(json => {
         console.log(json)
               this.setState({
                 isLoaded: true,
-                items: json.projects
+                items: json.project.modules
               })
         }).catch(function(ex) {
           console.log('parsing failed', ex)
@@ -44,8 +44,9 @@ class App extends Component {
           <ul>
             {items.map(item => (
               <li key={item.id}>
-                <img src={item.covers["115"]} />
-                {/* <img src={item.covers["202"]} />
+                <img src={item.src} />
+                {/* <img src={item.covers["115"]} />
+                <img src={item.covers["202"]} />
                 <img src={item.covers["230"]} />
                 <img src={item.covers["404"]} />
                 <img src={item.covers["808"]} />
