@@ -7,6 +7,7 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
+      covers: [],
       items: [],
       isLoaded: false
     }
@@ -21,6 +22,17 @@ class App extends Component {
     //       items: json
     //     })
     //   });
+    fetchJsonp('https://api.behance.net/v2/users/yente_ho/projects?client_id=XrTXvo7P59I8TcXEqP0DDRgxi6Jmx5Rd')
+    .then(res => res.json())
+    .then(json => {
+      console.log(json)
+            this.setState({
+              isLoaded: true,
+              covers: json.projects
+            })
+      }).catch(function(ex) {
+        console.log('parsing failed', ex)
+      })
     fetchJsonp('https://api.behance.net/v2/projects/68127253?client_id=XrTXvo7P59I8TcXEqP0DDRgxi6Jmx5Rd')
       .then(res => res.json())
       .then(json => {
@@ -35,7 +47,7 @@ class App extends Component {
   }
   
   render() {
-    const {isLoaded, items } = this.state;
+    const {isLoaded, items, covers } = this.state;
     if(!isLoaded){
       return <div>Loading...</div>
     }else{
@@ -45,13 +57,20 @@ class App extends Component {
             {items.map(item => (
               <li key={item.id}>
                 <img src={item.src} />
-                {/* <img src={item.covers["115"]} />
-                <img src={item.covers["202"]} />
-                <img src={item.covers["230"]} />
-                <img src={item.covers["404"]} />
-                <img src={item.covers["808"]} />
-                <img src={item.covers.original} />
-                <img src={item.covers.max_808} /> */}
+              </li>
+            ))}
+          </ul>
+          <ul>
+            {covers.map(product => (
+              <li key={product.id}>
+                {product.name}
+                <img src={product.covers["115"]} />
+                {/* <img src={product.covers["202"]} />
+                <img src={product.covers["230"]} />
+                <img src={product.covers["404"]} />
+                <img src={product.covers["808"]} />
+                <img src={product.covers.original} />
+                <img src={product.covers.max_808} /> */}
               </li>
             ))}
           </ul>
