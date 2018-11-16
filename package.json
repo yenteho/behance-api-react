@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "fetch-jsonp": "^1.1.3",
+    "install": "^0.12.2",
     "modern-scripts": "2.2.0",
+    "npm": "^6.4.1",
     "react": "^16.6.3",
     "react-dom": "^16.6.3"
   },
