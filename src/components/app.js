@@ -9,6 +9,7 @@ class App extends Component {
     this.state = {
       covers: [],
       items: [],
+      blogs: [],
       isLoaded: false
     }
   }
@@ -44,10 +45,19 @@ class App extends Component {
         }).catch(function(ex) {
           console.log('parsing failed', ex)
         })
+    fetch('https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@yente_ho')
+      .then(res => res.json())
+      .then(json => {
+        console.log(json)
+        this.setState({
+          isLoaded: true,
+          blogs: json.items
+        })
+      });
   }
   
   render() {
-    const {isLoaded, items, covers } = this.state;
+    const {isLoaded, items, covers, blogs } = this.state;
     if(!isLoaded){
       return <div>Loading...</div>
     }else{
@@ -74,7 +84,11 @@ class App extends Component {
               </li>
             ))}
           </ul>
-
+          <ul>
+            {blogs.map(blog => (
+              <li key={blog.content} dangerouslySetInnerHTML={{__html : blog.content}} />
+            ))}
+          </ul>
         </div>
       );
     }
@@ -82,3 +96,8 @@ class App extends Component {
 }
 
 export default App;
+
+
+
+
+
